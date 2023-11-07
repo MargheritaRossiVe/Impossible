@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sito di Margherita Rossi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        nav {
+            background-color: #444;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle:checked + nav {
+                display: block;
+                position: absolute;
+                background-color: #444;
+                width: 100%;
+                text-align: center;
+                top: 50px;
+                left: 0;
+                z-index: 1;
+            }
+
+            nav {
+                display: none;
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 20px 0;
+            }
+
+            nav li {
+                display: block;
+                margin: 10px 0;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                z-index: 2;
+            }
+        }
+
+        main {
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sito di Margherita Rossi</h1>
+    </header>
+
+    <input type="checkbox" class="menu-toggle" id="menu-toggle">
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Interviste impossibili</a></li>
+            <li><a href="#">Galleria immagini</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <img src="tua_gif.gif" alt="GIF">
+    </main>
+
+    <footer>
+        © 2023 Sito di Margherita Rossi
+    </footer>
+</body>
+</html>
