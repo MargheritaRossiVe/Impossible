@@ -3,79 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChatGPT Integration</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        #chat-container {
-            width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        #chat-box {
-            max-height: 400px;
-            overflow-y: scroll;
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-        #user-input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-    </style>
+    <title>ChatGPT on Another Site</title>
 </head>
 <body>
+    <h1>Chat with ChatGPTTTTTTT</h1>
     <div id="chat-container">
-        <h1>Chat with ChatGPT ciaone</h1>
         <div id="chat-box"></div>
         <input type="text" id="user-input" placeholder="Ask a question">
+        <button id="send-button">Send</button>
     </div>
 
     <script>
-        const apiKey = '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';
-        const chatBox = document.getElementById('chat-box');
-        const userInput = document.getElementById('user-input');
 
-        function appendMessage(message, isUser = false) {
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add(isUser ? 'user-message' : 'chat-message');
-            messageDiv.textContent = message;
-            chatBox.appendChild(messageDiv);
-        }
+const apiKey = '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';
+const chatBox = document.getElementById('chat-box');
+const userInput = document.getElementById('user-input');
+const sendButton = document.getElementById('send-button');
 
-        userInput.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                const userMessage = userInput.value;
-                appendMessage(userMessage, true);
-                userInput.value = '';
+sendButton.addEventListener('click', sendMessage);
 
-                // Call ChatGPT API
-                fetch('https://api.openai.com/v1/engines/davinci-codex/completions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiKey}`
-                    },
-                    body: JSON.stringify({
-                        prompt: userMessage,
-                        max_tokens: 50
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    const chatResponse = data.choices[0].text;
-                    appendMessage(chatResponse);
-                })
-                .catch(error => console.error('API request error:', error));
-            }
-        });
-    </script>
+function appendMessage(message) {
+    const messageDiv = document.createElement('div');
+    messageDiv.textContent = message;
+    chatBox.appendChild(messageDiv);
+}
+
+function sendMessage() {
+    const userMessage = userInput.value;
+    appendMessage(`You: ${userMessage}`);
+    userInput.value = '';
+
+    // Call ChatGPT API
+    fetch('https://api.openai.com/v1/engines/davinci-codex/completions', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+            prompt: userMessage,
+            max_tokens: 50
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const chatResponse = data.choices[0].text;
+        appendMessage(`ChatGPT: ${chatResponse}`);
+    })
+    .catch(error => console.error('API request error:', error));
+}
+
+</script>
 </body>
 </html>
