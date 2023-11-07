@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ChatGPT Web</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #chat-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        #chat-messages {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #fff;
+        }
+        #user-input {
+            width: 100%;
+            padding: 5px;
+            margin-top: 10px;
+        }
+        #send-button {
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <h1>ChatGPT</h1>
+        <div id="chat-messages"></div>
+        <input type="text" id="user-input" placeholder="Fai una domanda...">
+        <button id="send-button">Invia</button>
+    </div>
+
+    <script>
+        const apiKey = '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';
+        const endpoint = 'https://api.openai.com/v1/engines/davinci-codex/completions';
+
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        sendButton.addEventListener('click', sendMessage);
+
+        function appendMessage(who, text) {
+            const messageElement = document.createElement('p');
+            messageElement.innerHTML = `<strong>${who}:</strong> ${text}`;
+            chatMessages.appendChild(messageElement);
+        }
+
+        function sendMessage() {
+            const userMessage = userInput.value;
+            userInput.value = '';
+
+            appendMessage('Utente', userMessage);
+
+            fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    prompt: userMessage,
+                    max_tokens: 50
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const chatGptResponse = data.choices[0].text;
+                appendMessage('ChatGPT', chatGptResponse);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        }
+    </script>
+</body>
+</html>
